@@ -1,0 +1,223 @@
+/* ==========================================================================
+   Animações de Alto Padrão (60 FPS, Somente transform e opacity)
+   Curva: cubic-bezier(.22, 1, .36, 1) — Sem layout shift
+   ========================================================================== */
+
+/* 1. Monograma de Abertura (SVG Stroke Dasharray) */
+@keyframes strokeDraw {
+  0% {
+    stroke-dashoffset: 200;
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes splashFadeUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+.splash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  animation: splashFadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.splash-svg {
+  width: 120px;
+  height: 120px;
+}
+
+.splash-svg path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: strokeDraw 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 2. Hero Máscara de Revelação (Text Mask Reveal) */
+.mask-line {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 0.28em;
+}
+
+.mask-word {
+  display: inline-block;
+  transform: translateY(115%);
+  opacity: 0;
+  animation: maskRevealWord 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes maskRevealWord {
+  0% {
+    transform: translateY(115%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Staggers configuráveis */
+.stagger-1 { animation-delay: 0.08s; }
+.stagger-2 { animation-delay: 0.16s; }
+.stagger-3 { animation-delay: 0.24s; }
+.stagger-4 { animation-delay: 0.32s; }
+.stagger-5 { animation-delay: 0.40s; }
+.stagger-6 { animation-delay: 0.48s; }
+
+/* 3. Scroll Reveal via IntersectionObserver */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 4. Marquee Infinito de Habilidades */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.skills-marquee-container {
+  overflow: hidden;
+  user-select: none;
+  position: relative;
+  width: 100%;
+  padding: var(--spacing-20) 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface-subtle);
+}
+
+.skills-marquee-container:hover .skills-marquee-track {
+  animation-play-state: paused;
+}
+
+.skills-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 28s linear infinite;
+  will-change: transform;
+}
+
+/* 5. Transições de Página */
+.page-transition {
+  animation: pageFadeSlide 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes pageFadeSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 6. Micro-interações de Botão Copiado */
+@keyframes copyPop {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.copy-feedback-pop {
+  animation: copyPop 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 8. Quadra de Vôlei no Hero (Parallax e Linhas Finas) */
+.court-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(circle at 50% 30%, black 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle at 50% 30%, black 20%, transparent 75%);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+/* 9. Ícone do Menu Mobile com transição para X */
+.menu-toggle-icon {
+  width: 24px;
+  height: 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.menu-toggle-icon span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--color-text-primary);
+  border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.2s ease;
+}
+
+.menu-open .menu-toggle-icon span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.menu-open .menu-toggle-icon span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.menu-open .menu-toggle-icon span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+

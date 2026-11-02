@@ -1,0 +1,908 @@
+/* ==========================================================================
+   Componentes — Sem frameworks, 100% autoral, seguindo tokens do DESIGN.MD
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Header Fixo & Barra de Progresso
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  z-index: 1000;
+  background-color: rgba(5, 7, 13, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--color-border);
+  transition: transform 0.35s var(--ease-out-apple), background-color 0.3s ease;
+  will-change: transform;
+}
+
+.site-header.header-hidden {
+  transform: translateY(-100%);
+}
+
+.scroll-progress-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: transparent;
+  pointer-events: none;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-blue-primary), var(--color-accent));
+  width: 0%;
+  transition: width 0.08s linear;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-primary);
+  min-height: var(--min-touch-target);
+}
+
+.header-monogram {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.header-brand:hover .header-monogram {
+  transform: scale(1.06);
+  border-color: var(--color-accent);
+}
+
+.header-nav {
+  display: none;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+@media (min-width: 768px) {
+  .header-nav {
+    display: flex;
+  }
+}
+
+.nav-link {
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  padding: 8px 16px;
+  border-radius: var(--radius-buttons);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+  position: relative;
+  min-height: var(--min-touch-target);
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-link:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-surface-hover);
+}
+
+.nav-link.active {
+  color: var(--color-text-primary);
+  background-color: var(--color-surface-2);
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 2px;
+  background-color: var(--color-accent);
+  border-radius: 2px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+}
+
+.header-email-btn {
+  display: none;
+  align-items: center;
+  gap: var(--spacing-8);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  padding: 6px 14px;
+  border-radius: var(--radius-buttons);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-1);
+  transition: all var(--transition-fast);
+}
+
+@media (min-width: 768px) {
+  .header-email-btn {
+    display: inline-flex;
+  }
+}
+
+.header-email-btn:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-accent);
+  background-color: var(--color-surface-hover);
+}
+
+/* Botão Hambúrguer Mobile */
+.mobile-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-buttons);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-1);
+}
+
+@media (min-width: 768px) {
+  .mobile-menu-btn {
+    display: none;
+  }
+}
+
+/* Cortina do Menu Mobile em Tela Cheia */
+.mobile-drawer {
+  position: fixed;
+  inset: 0;
+  top: var(--header-height);
+  z-index: 999;
+  background-color: rgba(5, 7, 13, 0.98);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--spacing-32) var(--spacing-24);
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.4s var(--ease-out-apple), opacity 0.3s ease;
+}
+
+.mobile-drawer.is-open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mobile-drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20);
+  margin-top: var(--spacing-20);
+}
+
+.mobile-drawer-link {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.mobile-drawer-link.active {
+  color: var(--color-accent);
+}
+
+.mobile-drawer-link:active {
+  transform: translateX(8px);
+}
+
+.mobile-drawer-footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  padding-top: var(--spacing-24);
+  border-top: 1px solid var(--color-border);
+}
+
+/* --------------------------------------------------------------------------
+   2. Botões (Pills 9999px — Estilo Editorial Apple)
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-8);
+  padding: 12px 24px;
+  border-radius: var(--radius-buttons);
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  min-height: var(--min-touch-target);
+  min-width: var(--min-touch-target);
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background-color: var(--color-accent);
+  color: var(--color-accent-text);
+  border: 1px solid transparent;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: var(--color-surface-1);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-surface-hover);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-blue {
+  background-color: var(--color-blue-primary);
+  color: #FFFFFF;
+  border: 1px solid transparent;
+}
+
+.btn-blue:hover {
+  background-color: var(--color-blue-hover);
+  transform: translateY(-2px);
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: var(--text-caption);
+}
+
+/* --------------------------------------------------------------------------
+   3. Cards de Projeto (28px Radius, Hairline Border, Zero Shadows)
+   -------------------------------------------------------------------------- */
+.project-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-cards);
+  overflow: hidden;
+  text-decoration: none;
+  transition: border-color var(--transition-normal), background-color var(--transition-normal);
+  position: relative;
+}
+
+.project-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  background-color: var(--color-surface-hover);
+}
+
+.project-card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background-color: var(--color-surface-2);
+}
+
+.project-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-out-apple);
+}
+
+.project-card:hover .project-card-image {
+  transform: scale(1.04);
+}
+
+.project-card-number {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 4px 10px;
+  border-radius: var(--radius-buttons);
+  background-color: rgba(5, 7, 13, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-accent);
+}
+
+.project-card-body {
+  padding: var(--card-padding);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.project-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-8);
+  margin-bottom: var(--spacing-12);
+}
+
+.project-card-category {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+}
+
+.project-card-title {
+  font-family: var(--font-display);
+  font-size: var(--text-heading);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-8);
+  position: relative;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+/* Sublinhado amarelo que cresce da esquerda para a direita no hover */
+.project-card-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-out-apple);
+}
+
+.project-card:hover .project-card-title::after {
+  transform: scaleX(1);
+}
+
+.project-card-desc {
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--spacing-20);
+  flex: 1;
+}
+
+.project-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--spacing-16);
+  border-top: 1px solid var(--color-border);
+}
+
+.project-card-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.project-card-arrow {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.4s var(--ease-out-apple);
+}
+
+.project-card:hover .project-card-arrow {
+  transform: translate(3px, -3px) rotate(45deg);
+}
+
+/* --------------------------------------------------------------------------
+   4. Tratamento Especial da Foto de João (Sobre & Hero)
+   -------------------------------------------------------------------------- */
+.photo-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* Moldura amarela com deslocamento intencional */
+.photo-frame-offset {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-cards);
+  border: 2px solid var(--color-accent);
+  transform: translate(14px, 14px);
+  pointer-events: none;
+  transition: transform 0.4s var(--ease-out-apple);
+}
+
+.photo-wrapper:hover .photo-frame-offset {
+  transform: translate(18px, 18px);
+}
+
+.photo-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-cards);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-1);
+  z-index: 1;
+}
+
+.photo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  filter: saturate(0.85) contrast(1.04);
+  transition: transform 0.6s var(--ease-out-apple), filter 0.4s ease;
+}
+
+.photo-container:hover .photo-image {
+  transform: scale(1.03);
+  filter: saturate(0.95) contrast(1.05);
+}
+
+/* Overlay azul-marinho autoral */
+.photo-overlay-blue {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(26, 93, 200, 0.22) 0%, rgba(11, 20, 38, 0.45) 100%);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   5. Tabela / Bloco de Tecnologias
+   -------------------------------------------------------------------------- */
+.tech-table-container {
+  background-color: var(--color-surface-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-cards);
+  overflow: hidden;
+  margin-top: var(--spacing-28);
+}
+
+.tech-table-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  padding: var(--spacing-16) var(--spacing-24);
+  border-bottom: 1px solid var(--color-border);
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .tech-table-row {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+  }
+}
+
+.tech-table-row:last-child {
+  border-bottom: none;
+}
+
+.tech-table-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-mono);
+}
+
+.tech-table-value {
+  font-size: var(--text-body-sm);
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   6. Galeria & Lightbox (Zoom, Teclado, Touch)
+   -------------------------------------------------------------------------- */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-24);
+  margin-top: var(--spacing-32);
+}
+
+@media (max-width: 480px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gallery-item {
+  background-color: var(--color-surface-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-cards);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.gallery-item:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-4px);
+}
+
+.gallery-media {
+  aspect-ratio: 16 / 10;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--color-surface-2);
+}
+
+.gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease-out-apple);
+}
+
+.gallery-item:hover .gallery-image {
+  transform: scale(1.03);
+}
+
+.gallery-caption {
+  padding: var(--spacing-16);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Lightbox Modal */
+.lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background-color: rgba(5, 7, 13, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--spacing-20);
+  animation: pageFadeSlide 0.3s var(--ease-out-apple);
+}
+
+.lightbox-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.lightbox-counter {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-accent);
+}
+
+.lightbox-close-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+  transition: all var(--transition-fast);
+}
+
+.lightbox-close-btn:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-accent);
+}
+
+.lightbox-stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.lightbox-stage-img {
+  max-width: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+  border-radius: var(--radius-cards);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+  transition: transform 0.3s var(--ease-out-apple);
+}
+
+.lightbox-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background-color: rgba(11, 20, 38, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  z-index: 2;
+}
+
+.lightbox-nav-btn:hover {
+  border-color: var(--color-accent);
+  background-color: var(--color-surface-2);
+}
+
+.lightbox-nav-btn.prev {
+  left: 12px;
+}
+
+.lightbox-nav-btn.next {
+  right: 12px;
+}
+
+.lightbox-bottom-info {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  padding: var(--spacing-12) 0;
+}
+
+/* --------------------------------------------------------------------------
+   7. Cursor Personalizado Discreto (Desktop com Mouse)
+   -------------------------------------------------------------------------- */
+.custom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.08s ease-out;
+}
+
+.custom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--color-accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99997;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s var(--ease-out-apple),
+              height 0.25s var(--ease-out-apple),
+              transform 0.18s ease-out,
+              background-color 0.2s ease,
+              opacity 0.2s ease;
+  opacity: 0.6;
+}
+
+.custom-cursor-ring.is-hovering {
+  width: 56px;
+  height: 56px;
+  background-color: var(--color-accent-subtle);
+  border-color: var(--color-accent);
+  opacity: 0.9;
+}
+
+@media (hover: none) or (prefers-reduced-motion: reduce) {
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. Botão Voltar ao Topo
+   -------------------------------------------------------------------------- */
+.back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: all var(--transition-fast);
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.back-to-top:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  transform: translateY(-3px);
+}
+
+/* --------------------------------------------------------------------------
+   9. Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+  background-color: var(--color-surface-1);
+  border-top: 1px solid var(--color-border);
+  padding: var(--spacing-64) 0 var(--spacing-32);
+  position: relative;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--spacing-40);
+  margin-bottom: var(--spacing-48);
+}
+
+@media (max-width: 768px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-32);
+  }
+}
+
+.footer-brand-title {
+  font-family: var(--font-display);
+  font-size: var(--text-heading);
+  font-weight: 700;
+  margin-bottom: var(--spacing-12);
+}
+
+.footer-desc {
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  max-width: 420px;
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--spacing-20);
+}
+
+.footer-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: 6px 14px;
+  border-radius: var(--radius-buttons);
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-accent);
+}
+
+.footer-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #10B981;
+  box-shadow: 0 0 8px #10B981;
+}
+
+.footer-col-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-mono);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-16);
+}
+
+.footer-links-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.footer-link {
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.footer-link:hover {
+  color: var(--color-accent);
+}
+
+.footer-copy-box {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-16);
+  padding-top: var(--spacing-28);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+}
+

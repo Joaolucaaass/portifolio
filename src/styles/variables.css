@@ -1,0 +1,115 @@
+:root {
+  /* ==========================================================================
+     Paleta de Cores Autoral (Identidade João Lucas + Regras Apple Gallery)
+     ========================================================================== */
+  --color-bg: #05070D;
+  --color-surface-1: #0B1426;
+  --color-surface-2: #101C33;
+  --color-surface-hover: #162442;
+  --color-surface-subtle: rgba(16, 28, 51, 0.6);
+
+  /* Linhas e Divisórias (Hairline Silver / Subtle) */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.05);
+  --color-border-focus: #F5C518;
+
+  /* Tipografia */
+  --color-text-primary: #E8EDF7;
+  --color-text-secondary: #8A97B2;
+  --color-text-muted: #5A6987;
+  --color-text-inverse: #05070D;
+
+  /* Azuis da Marca */
+  --color-blue-primary: #1A5DC8;
+  --color-blue-hover: #4F8BFF;
+  --color-blue-active: #0D47A1;
+  --color-blue-subtle: rgba(26, 93, 200, 0.12);
+
+  /* Acento Dinâmico (Default: Amarelo bola de vôlei Scout Live) */
+  --color-accent: #F5C518;
+  --color-accent-hover: #FFD54F;
+  --color-accent-subtle: rgba(245, 197, 24, 0.12);
+  --color-accent-text: #05070D;
+
+  /* Cores Temáticas de Projetos */
+  --color-scout-accent: #F5C518;
+  --color-scout-blue: #1A5DC8;
+  --color-provas-indigo: #4F46E5;
+  --color-filmes-orange: #F59E0B;
+
+  /* Status */
+  --color-success: #10B981;
+  --color-error: #EF4444;
+
+  /* ==========================================================================
+     Tipografia (Font Families & Scale)
+     ========================================================================== */
+  --font-display: 'Sora', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Tipografia Fluida (Mobile-first clamp) */
+  --text-hero: clamp(2.5rem, 6.5vw + 1rem, 5.25rem);
+  --text-display-1: clamp(2rem, 4.5vw + 0.5rem, 3.5rem);
+  --text-display-2: clamp(1.6rem, 3vw + 0.5rem, 2.5rem);
+  --text-heading: clamp(1.25rem, 2vw + 0.25rem, 1.75rem);
+  --text-subheading: clamp(1.05rem, 1.5vw + 0.1rem, 1.25rem);
+  --text-body: 1.0625rem; /* ~17px Apple body */
+  --text-body-sm: 0.875rem; /* 14px */
+  --text-caption: 0.75rem; /* 12px */
+
+  --leading-tight: 1.05;
+  --leading-snug: 1.22;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  --tracking-tight: -0.035em;
+  --tracking-normal: -0.015em;
+  --tracking-wide: 0.06em;
+  --tracking-mono: 0.03em;
+
+  /* ==========================================================================
+     Espaçamento & Formas (Tokens do DESIGN.MD - Base unit 4px)
+     ========================================================================== */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-90: 90px;
+  --spacing-128: 128px;
+
+  --section-gap: clamp(56px, 8vw, 90px);
+  --card-padding: clamp(20px, 3vw, 28px);
+  --element-gap: 20px;
+  --container-max-width: 1200px;
+  --container-px: clamp(16px, 4vw, 32px);
+
+  /* Border Radius (DESIGN.MD exact rules) */
+  --radius-cards: 28px;
+  --radius-images: 28px;
+  --radius-buttons: 9999px;
+  --radius-pills: 36px;
+  --radius-navigation: 20px;
+  --radius-links: 10px;
+  --radius-input: 980px;
+  --radius-sm: 8px;
+
+  /* Transições & Curvas de Aceleração Suaves */
+  --ease-out-apple: cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-fast: 200ms var(--ease-out-apple);
+  --transition-normal: 350ms var(--ease-out-apple);
+  --transition-slow: 600ms var(--ease-out-apple);
+
+  /* Alturas e Dimensões Fixas */
+  --header-height: 64px;
+  --min-touch-target: 44px;
+}
+
